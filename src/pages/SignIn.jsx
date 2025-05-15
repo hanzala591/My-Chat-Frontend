@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 
-export default function SignUp() {
+export default function SignIn() {
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [form, setForm] = useState({
-    username: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,7 +17,7 @@ export default function SignUp() {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Sign up
+            Sign In
           </h2>
         </div>
 
@@ -30,28 +28,6 @@ export default function SignUp() {
             method="POST"
             className="space-y-6"
           >
-            {/* User Name */}
-            <div>
-              <label
-                htmlFor="username"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                User Name
-              </label>
-              <div className="mt-2">
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  required
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  onChange={(event) => {
-                    setForm({ ...form, username: event.target.value });
-                  }}
-                />
-              </div>
-            </div>
-
             {/* Email */}
             <div>
               <label
@@ -95,45 +71,6 @@ export default function SignUp() {
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   onChange={(event) => {
                     setForm({ ...form, password: event.target.value });
-                  }}
-                />
-                <div
-                  className="absolute top-1/2 right-3 -translate-1/2"
-                  onClick={() => setHiddenPassword((v) => !v)}
-                >
-                  {hiddenPassword ? <FaEye /> : <FaEyeSlash />}
-                </div>
-              </div>
-            </div>
-
-            {/* Confirm Password */}
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="confirmPassword"
-                  className="block text-sm/6 font-medium text-gray-900"
-                >
-                  Confirm Password
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2 relative">
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type={hiddenPassword ? "password" : "text"}
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  onChange={(event) => {
-                    setForm({ ...form, confirmPassword: event.target.value });
                   }}
                 />
                 <div
