@@ -4,6 +4,16 @@ import { FaEyeSlash } from "react-icons/fa";
 
 export default function SignUp() {
   const [hiddenPassword, setHiddenPassword] = useState(true);
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(form);
+  };
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -14,7 +24,12 @@ export default function SignUp() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form
+            action="#"
+            onSubmit={handleSubmit}
+            method="POST"
+            className="space-y-6"
+          >
             {/* User Name */}
             <div>
               <label
@@ -30,6 +45,9 @@ export default function SignUp() {
                   type="text"
                   required
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={(event) => {
+                    setForm({ ...form, username: event.target.value });
+                  }}
                 />
               </div>
             </div>
@@ -50,6 +68,9 @@ export default function SignUp() {
                   required
                   autoComplete="email"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={(event) => {
+                    setForm({ ...form, email: event.target.value });
+                  }}
                 />
               </div>
             </div>
@@ -72,6 +93,9 @@ export default function SignUp() {
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={(event) => {
+                    setForm({ ...form, password: event.target.value });
+                  }}
                 />
                 <div
                   className="absolute top-1/2 right-3 -translate-1/2"
@@ -86,7 +110,7 @@ export default function SignUp() {
             <div>
               <div className="flex items-center justify-between">
                 <label
-                  htmlFor="password"
+                  htmlFor="confirmPassword"
                   className="block text-sm/6 font-medium text-gray-900"
                 >
                   Confirm Password
@@ -102,12 +126,15 @@ export default function SignUp() {
               </div>
               <div className="mt-2 relative">
                 <input
-                  id="password"
-                  name="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
                   type={hiddenPassword ? "password" : "text"}
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={(event) => {
+                    setForm({ ...form, confirmPassword: event.target.value });
+                  }}
                 />
                 <div
                   className="absolute top-1/2 right-3 -translate-1/2"
