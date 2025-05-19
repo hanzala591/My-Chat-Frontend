@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const [hiddenPassword, setHiddenPassword] = useState(true);
@@ -13,6 +14,9 @@ export default function SignUp() {
   });
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (form.password !== form.confirmPassword) {
+      toast.error("Password and Confirm Does Not Match");
+    }
     console.log(form);
   };
   return (
