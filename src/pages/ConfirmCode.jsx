@@ -6,33 +6,72 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { axiosInstance } from "@/axios/axios";
+import { useNavigate } from "react-router-dom";
+import { signin } from "@/store/authSlice";
 export default function ConfirmCode() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [otpCode, setOtpCode] = useState();
+  const handleverify = async (event) => {
+    if (!otpCode) {
+      toast.error("Please Enter Code");
+      return;
+    }
+    if (otpCode.length < 6) {
+      toast.error("Please Enter 6 Digit Code");
+      return;
+    }
+    const formData = {
+      email: localStorage.getItem("signin-email"),
+      code: otpCode,
+    };
+    await axiosInstance
+      .post("/auth/generateOTP", formData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        toast.success("You Are SignIn");
+        dispatch(signin(res.data.data));
+        localStorage.removeItem("signin-email");
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+      });
+  };
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-      <div className="flex flex-col justify-center items-center gap-4">
-        <p>Code is Send To Your Email raihanzala591@gmail.com</p>
-        <InputOTP
-          maxLength={6}
-          onChange={(e) => {
-            setOtpCode(e);
-          }}
-        >
-          <InputOTPGroup>
-            <InputOTPSlot index={0} />
-            <InputOTPSlot index={1} />
-            <InputOTPSlot index={2} />
-            <InputOTPSlot index={3} />
-            <InputOTPSlot index={4} />
-            <InputOTPSlot index={5} />
-          </InputOTPGroup>
-        </InputOTP>
-        <button
-          type="submit"
-          className=" cursor-pointer flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Verify
-        </button>
+    <div>
+      <div className="w-full h-screen flex justify-center items-center">
+        <div className="flex flex-col justify-center items-center gap-4">
+          <p>
+            Code is Send To Your Email {localStorage.getItem("signin-email")}
+          </p>
+          <InputOTP
+            maxLength={6}
+            onChange={(e) => {
+              setOtpCode(e);
+            }}
+          >
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+          <button
+            type="submit"
+            className=" cursor-pointer flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={handleverify}
+          >
+            Verify
+          </button>
+        </div>
       </div>
     </div>
   );

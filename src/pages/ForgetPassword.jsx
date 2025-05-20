@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function ForgetPassword() {
@@ -152,6 +153,14 @@ export default function ForgetPassword() {
             </button>
           </div>
         </form>
+        <div className="mt-10 text-sm/6 text-gray-500 flex justify-center gap-1">
+          Back To ?{"   "}
+          <Link to="/signin">
+            <div className="font-semibold text-indigo-600 hover:text-indigo-500 underline">
+              Signin
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );

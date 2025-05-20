@@ -7,20 +7,14 @@ export const authSlice = createSlice({
     authUser: null,
   },
   reducers: {
-    signup: async (state, action) => {
-      axiosInstance
-        .post("/auth/signup", action.payload)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    signin: (state, action) => {
+      console.log(action.payload);
+      state.authUser = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { signup } = authSlice.actions;
+export const { signin } = authSlice.actions;
 
 export default authSlice.reducer;

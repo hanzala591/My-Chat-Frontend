@@ -1,17 +1,31 @@
+import { axiosInstance } from "@/axios/axios";
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function SignIn() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(form);
+    await axiosInstance
+      .post("/auth/signin", form)
+      .then((res) => {
+        navigate("/verifycode");
+        toast.info("Code is Send Your Gmail.");
+        localStorage.setItem("signin-email", res?.data?.data);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+      });
   };
   return (
     <>
@@ -62,12 +76,12 @@ export default function SignIn() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a
+                  <div
                     href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     <Link to="/forgetpassword">Forgot password?</Link>
-                  </a>
+                  </div>
                 </div>
               </div>
               <div className="mt-2 relative">

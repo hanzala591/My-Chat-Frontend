@@ -1,5 +1,4 @@
 import { axiosInstance } from "@/axios/axios";
-import { signup } from "@/store/authSlice.js";
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
@@ -8,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function SignUp() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [form, setForm] = useState({
@@ -35,7 +33,7 @@ export default function SignUp() {
         navigate("/signin");
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        toast.error(err?.response?.data?.message);
       });
   };
   return (
