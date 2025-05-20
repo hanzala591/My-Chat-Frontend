@@ -1,10 +1,15 @@
+import { axiosInstance } from "@/axios/axios";
+import { signup } from "@/store/authSlice.js";
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function SignUp() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [form, setForm] = useState({
     username: "",
@@ -12,12 +17,26 @@ export default function SignUp() {
     password: "",
     confirmPassword: "",
   });
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (form.password !== form.confirmPassword) {
       toast.error("Password and Confirm Does Not Match");
+      return;
     }
-    console.log(form);
+    const formData = {
+      username: form.username,
+      email: form.email,
+      password: form.password,
+    };
+    await axiosInstance
+      .post("/auth/signup", formData)
+      .then((res) => {
+        toast.success("You Are Registered Please Signin");
+        navigate("/signin");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
   return (
     <>
@@ -120,14 +139,6 @@ export default function SignUp() {
                 >
                   Confirm Password
                 </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
               </div>
               <div className="mt-2 relative">
                 <input
@@ -155,7 +166,7 @@ export default function SignUp() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                Sign Up
               </button>
             </div>
           </form>
@@ -164,7 +175,7 @@ export default function SignUp() {
             Already have Account ?{"   "}
             <Link to="/signin">
               <div className="font-semibold text-indigo-600 hover:text-indigo-500 underline">
-                SignIn
+                Signin
               </div>
             </Link>
           </div>
