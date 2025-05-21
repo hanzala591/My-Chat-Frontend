@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import SenderMessage from "../components/SenderMessage";
 import RecieverMessage from "../components/RecieverMessage";
 import { FaSearch } from "react-icons/fa";
-import { FaMicrophone } from "react-icons/fa";
-const Chat = () => {
+
+import ChatSend from "@/components/ChatSend";
+const ChatContainer = () => {
   const [messages] = useState([
     { sender: "me", content: "Hey, how are you?" },
     { sender: "friend", content: "I’m good! What about you?" },
     { sender: "me", content: "Doing well, thanks!" },
   ]);
-  const [myMessage, setMyMessage] = useState("");
-  console.log(myMessage);
 
   return (
     <div className="flex h-screen">
@@ -39,23 +38,10 @@ const Chat = () => {
             )
           )}
         </div>
-        <div className="p-4 flex gap-2 border-t bg-white">
-          <input
-            type="text"
-            placeholder="Type a message"
-            className="flex-1 border px-4 py-2 rounded-full outline-none"
-            onChange={(e) => setMyMessage(e.target.value)}
-          />
-          <div className="bg-green-500 rounded-full flex justify-center items-center px-3 cursor-pointer">
-            <FaMicrophone className="text-white" />
-          </div>
-          <button className="bg-green-500 text-white px-4 py-2 rounded-full cursor-pointer">
-            Send
-          </button>
-        </div>
+        <ChatSend />
       </div>
     </div>
   );
 };
 
-export default Chat;
+export default ChatContainer;
