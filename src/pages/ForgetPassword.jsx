@@ -1,23 +1,31 @@
+import { forgetPassword } from "@/apis";
+import { axiosInstance } from "@/apis/axios/axios";
+import Loader from "@/components/Loader";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function ForgetPassword() {
   const [hiddenPassword, setHiddenPassword] = useState(true);
-  const [form, setForm] = useState({
-    email: "",
-    prepassword: "",
-    newpassword: "",
-    confirmPassword: "",
-  });
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+  const [isLoadding, setIsLoadding] = useState(false);
   const handleSubmit = (event) => {
+    setIsLoadding(true);
     event.preventDefault();
-    if (form.newpassword !== form.confirmPassword) {
-      toast.error("New Password and Confirm Does Not Match");
-    }
-    console.log(form);
+    forgetPassword(email)
+      .then((res) => {
+        navigate("/verifycodeforforgetpassword");
+        toast.info("Code is Send Your Gmail.");
+        localStorage.setItem("signin-email", res?.data?.data);
+        setIsLoadding(false);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+        setIsLoadding(false);
+      });
   };
   return (
     <div className="w-full h-screen flex justify-center items-center">
@@ -46,111 +54,23 @@ export default function ForgetPassword() {
                 autoComplete="email"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 onChange={(event) => {
-                  setForm({ ...form, email: event.target.value });
+                  setEmail(event.target.value);
                 }}
               />
             </div>
           </div>
 
-          {/* Previous Password */}
-          <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="prepassword"
-                className="block text-sm/6 font-medium text-gray-900"
+          <div className="flex justify-center">
+            {isLoadding ? (
+              <Loader />
+            ) : (
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Previous Password
-              </label>
-            </div>
-            <div className="mt-2 relative">
-              <input
-                id="prepassword"
-                name="prepassword"
-                type={hiddenPassword ? "password" : "text"}
-                required
-                autoComplete="current-password"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                onChange={(event) => {
-                  setForm({ ...form, prepassword: event.target.value });
-                }}
-              />
-              <div
-                className="absolute top-1/2 right-3 -translate-1/2"
-                onClick={() => setHiddenPassword((v) => !v)}
-              >
-                {hiddenPassword ? <FaEye /> : <FaEyeSlash />}
-              </div>
-            </div>
-          </div>
-
-          {/* Password */}
-          <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="newpassword"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                New Password
-              </label>
-            </div>
-            <div className="mt-2 relative">
-              <input
-                id="newpassword"
-                name="newpassword"
-                type={hiddenPassword ? "password" : "text"}
-                required
-                autoComplete="current-password"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                onChange={(event) => {
-                  setForm({ ...form, newpassword: event.target.value });
-                }}
-              />
-              <div
-                className="absolute top-1/2 right-3 -translate-1/2"
-                onClick={() => setHiddenPassword((v) => !v)}
-              >
-                {hiddenPassword ? <FaEye /> : <FaEyeSlash />}
-              </div>
-            </div>
-          </div>
-          {/* Confirm Password */}
-          <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                Confirm Password
-              </label>
-            </div>
-            <div className="mt-2 relative">
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type={hiddenPassword ? "password" : "text"}
-                required
-                autoComplete="current-password"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                onChange={(event) => {
-                  setForm({ ...form, confirmPassword: event.target.value });
-                }}
-              />
-              <div
-                className="absolute top-1/2 right-3 -translate-1/2"
-                onClick={() => setHiddenPassword((v) => !v)}
-              >
-                {hiddenPassword ? <FaEye /> : <FaEyeSlash />}
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Forget Password
-            </button>
+                Forget Password
+              </button>
+            )}
           </div>
         </form>
         <div className="mt-10 text-sm/6 text-gray-500 flex justify-center gap-1">

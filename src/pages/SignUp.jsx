@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/axios/axios";
+import { signUpUser } from "@/apis";
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
@@ -26,8 +26,7 @@ export default function SignUp() {
       email: form.email,
       password: form.password,
     };
-    await axiosInstance
-      .post("/auth/signup", formData)
+    signUpUser(formData)
       .then((res) => {
         toast.success("You Are Registered Please Signin");
         navigate("/signin");

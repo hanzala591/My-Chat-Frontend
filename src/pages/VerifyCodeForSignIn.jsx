@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
 import {
   InputOTP,
   InputOTPGroup,
@@ -8,18 +7,15 @@ import {
 } from "@/components/ui/input-otp";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { axiosInstance } from "@/axios/axios";
+import { axiosInstance } from "@/apis/axios/axios";
 import { useNavigate } from "react-router-dom";
-import { signin } from "@/store/authSlice";
+import { verfiyCodeForSignIn } from "@/apis";
+import { setAuthUser } from "@/store/authSlice";
 export default function ConfirmCode() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [otpCode, setOtpCode] = useState();
   const handleverify = async (event) => {
-    if (!otpCode) {
-      toast.error("Please Enter Code");
-      return;
-    }
     if (otpCode.length < 6) {
       toast.error("Please Enter 6 Digit Code");
       return;
@@ -28,13 +24,10 @@ export default function ConfirmCode() {
       email: localStorage.getItem("signin-email"),
       code: otpCode,
     };
-    await axiosInstance
-      .post("/auth/generateOTP", formData, {
-        withCredentials: true,
-      })
+    verfiyCodeForSignIn(formData)
       .then((res) => {
         toast.success("You Are SignIn");
-        dispatch(signin(res.data.data));
+        dispatch(setAuthUser(res.data.data));
         localStorage.removeItem("signin-email");
         navigate("/");
       })

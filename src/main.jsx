@@ -5,7 +5,7 @@ import App from "./App.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUp from "./pages/SignUp.jsx";
 import SignIn from "./pages/SignIn.jsx";
-import ConfirmCode from "./pages/ConfirmCode";
+import ConfirmCode from "./pages/VerifyCodeForSignIn";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import ForgetPassword from "./pages/ForgetPassword";
@@ -13,16 +13,7 @@ import ForgetPassword from "./pages/ForgetPassword";
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter>
-      <StrictMode>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="signup" element={<SignUp />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="verifycode" element={<ConfirmCode />} />
-            <Route path="forgetpassword" element={<ForgetPassword />} />
-          </Route>
-        </Routes>
-      </StrictMode>
+      <App />
     </BrowserRouter>
   </Provider>
 );

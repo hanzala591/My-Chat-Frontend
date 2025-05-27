@@ -1,12 +1,34 @@
+import { sendMessage } from "@/apis/message/message.api";
+import { setMessages } from "@/store/messageSlice";
 import React, { useEffect, useRef, useState } from "react";
 import { FaMicrophone } from "react-icons/fa";
 import { FaMicrophoneSlash } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 export default function ChatSend() {
-  const [inputText, setInputText] = useState("");
+  const [message, setMessage] = useState("");
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef(null);
+  const selectedUser = useSelector((state) => state.message.selectedUser);
+  const dispatch = useDispatch();
+
+  const handlesendMessage = (e) => {
+    if (selectedUser) {
+      const formData = {
+        message,
+      };
+      sendMessage(formData, selectedUser._id)
+        .then((res) => {
+          dispatch(setMessages(res?.data?.data));
+          setMessage("");
+        })
+        .then((err) => {
+          toast.error(err);
+          setMessage("");
+        });
+    }
+  };
 
   // Initialize SpeechRecognition on component mount
   useEffect(() => {
@@ -18,12 +40,12 @@ export default function ChatSend() {
 
       recognitionRef.current.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
-        setInputText((prevText) => prevText + transcript + " "); // Append recognized text
+        setMessage((prevText) => prevText + transcript + " "); // Append recognized text
         setIsListening(false); // Stop listening after result
       };
 
       recognitionRef.current.onerror = (event) => {
-        console.error("Speech recognition error:", event.error);
+        toast.error("Speech recognition error:", event.error);
         setIsListening(false);
       };
 
@@ -37,13 +59,13 @@ export default function ChatSend() {
         }
       };
     } else {
-      console.warn("Web Speech API is not supported in this browser.");
+      toast.error("Web Speech API is not supported in this browser.");
     }
   }, []); // Empty dependency array means this runs once on mount
 
   const toggleListening = () => {
     if (!recognitionRef.current) {
-      console.warn("Speech Recognition not initialized or not supported.");
+      toast.error("Speech Recognition not initialized or not supported.");
       return;
     }
 
@@ -51,7 +73,6 @@ export default function ChatSend() {
       recognitionRef.current.stop();
       setIsListening(false);
     } else {
-      // setInputText(""); // Clear input before starting new recognition
       recognitionRef.current.start();
       setIsListening(true);
     }
@@ -63,8 +84,8 @@ export default function ChatSend() {
         type="text"
         placeholder="Type a message"
         className="flex-1 border px-4 py-2 rounded-full outline-none"
-        onChange={(e) => setInputText(e.target.value)}
-        value={inputText}
+        onChange={(e) => setMessage(e.target.value)}
+        value={message}
       />
       <div
         className="bg-green-500 rounded-full flex justify-center items-center px-3 cursor-pointer"
@@ -80,7 +101,10 @@ export default function ChatSend() {
           </>
         )}
       </div>
-      <button className="bg-green-500 text-white px-4 py-2 rounded-full cursor-pointer">
+      <button
+        className="bg-green-500 text-white px-4 py-2 rounded-full cursor-pointer"
+        onClick={handlesendMessage}
+      >
         Send
       </button>
 

@@ -1,4 +1,6 @@
-import { axiosInstance } from "@/axios/axios";
+import { signInUser } from "@/apis";
+import { axiosInstance } from "@/apis/axios/axios";
+import Loader from "@/components/Loader";
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
@@ -8,6 +10,7 @@ import { toast } from "react-toastify";
 
 export default function SignIn() {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [form, setForm] = useState({
@@ -15,16 +18,19 @@ export default function SignIn() {
     password: "",
   });
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
-    await axiosInstance
-      .post("/auth/signin", form)
+    signInUser(form)
       .then((res) => {
-        navigate("/verifycode");
+        console.log("res");
+        navigate("/verifycodeforsignin");
         toast.info("Code is Send Your Gmail.");
         localStorage.setItem("signin-email", res?.data?.data);
+        setLoading(false);
       })
       .catch((err) => {
         toast.error(err?.response?.data?.message);
+        setLoading(false);
       });
   };
   return (
@@ -105,13 +111,17 @@ export default function SignIn() {
               </div>
             </div>
 
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Sign in
-              </button>
+            <div className="w-full flex justify-center ">
+              {loading ? (
+                <Loader className="h-20" />
+              ) : (
+                <button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Sign in
+                </button>
+              )}
             </div>
           </form>
 

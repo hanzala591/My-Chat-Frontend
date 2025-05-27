@@ -6,12 +6,12 @@ export const authSlice = createSlice({
     authUser: null,
   },
   reducers: {
-    signin: (state, action) => {
+    setAuthUser: (state, action) => {
       state.authUser = action.payload;
     },
   },
 });
 
-export const { signin } = authSlice.actions;
+export const { setAuthUser } = authSlice.actions;
 
 export default authSlice.reducer;
