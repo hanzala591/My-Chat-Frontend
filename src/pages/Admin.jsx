@@ -4,6 +4,7 @@ import { socket } from "@/config/socket";
 import { getMessages, setMessages } from "@/store/messageSlice";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function Admin() {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export default function Admin() {
         dispatch(getMessages(res?.data?.data));
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
       });
     socket.on("newmessage", (message) => {
       dispatch(setMessages(message));

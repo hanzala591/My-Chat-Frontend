@@ -16,6 +16,7 @@ const ChatContainer = () => {
   const users = useSelector((state) => state.user.users);
   const selectedUser = useSelector((state) => state.message.selectedUser);
   const dispatch = useDispatch();
+
   useEffect(() => {
     socket.emit("register", user._id);
     socket.on("registered", (res) => {

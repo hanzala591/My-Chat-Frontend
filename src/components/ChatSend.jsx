@@ -34,14 +34,14 @@ export default function ChatSend() {
   useEffect(() => {
     if ("webkitSpeechRecognition" in window) {
       recognitionRef.current = new window.webkitSpeechRecognition();
-      recognitionRef.current.continuous = false; // Listen for a single utterance
-      recognitionRef.current.interimResults = false; // Only return final results
-      recognitionRef.current.lang = "en-US"; // Set language
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = "en-US";
 
       recognitionRef.current.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
-        setMessage((prevText) => prevText + transcript + " "); // Append recognized text
-        setIsListening(false); // Stop listening after result
+        setMessage((prevText) => prevText + transcript + " ");
+        setIsListening(false);
       };
 
       recognitionRef.current.onerror = (event) => {
@@ -50,18 +50,14 @@ export default function ChatSend() {
       };
 
       recognitionRef.current.onend = () => {
-        // This fires even if recognition stopped due to a result or error
-        // We only want to set isListening to false if we explicitly stopped it
-        // or if an error occurred. If a result came in, onresult already handled it.
         if (isListening) {
-          // If it was still listening when onend fired
           setIsListening(false);
         }
       };
     } else {
       toast.error("Web Speech API is not supported in this browser.");
     }
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
   const toggleListening = () => {
     if (!recognitionRef.current) {

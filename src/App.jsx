@@ -13,11 +13,11 @@ import "./App.css";
 import { getCurrentUser } from "./apis";
 import Loader from "./components/Loader";
 import Admin from "./pages/Admin";
+
 function App() {
   const authUser = useSelector((state) => state.auth.authUser);
   const [isloadding, setIsLoadding] = useState(true);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   useEffect(() => {
     getCurrentUser()
       .then((res) => {

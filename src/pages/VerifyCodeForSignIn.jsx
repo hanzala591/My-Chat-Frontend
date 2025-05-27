@@ -16,18 +16,14 @@ export default function ConfirmCode() {
   const dispatch = useDispatch();
   const [otpCode, setOtpCode] = useState();
   const handleverify = async (event) => {
-    if (otpCode.length < 6) {
-      toast.error("Please Enter 6 Digit Code");
-      return;
-    }
     const formData = {
       email: localStorage.getItem("signin-email"),
       code: otpCode,
     };
     verfiyCodeForSignIn(formData)
       .then((res) => {
-        toast.success("You Are SignIn");
-        dispatch(setAuthUser(res.data.data));
+        toast.success(res?.data?.data?.message);
+        dispatch(setAuthUser(res?.data?.data));
         localStorage.removeItem("signin-email");
         if (res?.data?.data?.role === "admin") {
           navigate("/admin");

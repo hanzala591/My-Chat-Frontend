@@ -56,7 +56,7 @@ export default function ConfirmCode() {
               setForm({ ...form, code: e });
             }}
           >
-            <InputOTPGroup>
+            <InputOTPGroup className="w-full">
               <InputOTPSlot index={0} />
               <InputOTPSlot index={1} />
               <InputOTPSlot index={2} />
