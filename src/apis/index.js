@@ -16,5 +16,9 @@ export {
 };
 import { getAllUsers } from "./user/user.api.js";
 export { getAllUsers };
-import { getAllMessages, sendMessage } from "./message/message.api.js";
-export { getAllMessages, sendMessage };
+import {
+  getAllMessages,
+  sendMessage,
+  getAllAdminMessages,
+} from "./message/message.api.js";
+export { getAllMessages, sendMessage, getAllAdminMessages };

@@ -11,3 +11,9 @@ export const getAllMessages = async (id) => {
     withCredentials: true,
   });
 };
+
+export const getAllAdminMessages = async () => {
+  return await axiosInstance.get("/message/getAllAdminMessages", {
+    withCredentials: true,
+  });
+};

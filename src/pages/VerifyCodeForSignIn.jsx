@@ -29,7 +29,13 @@ export default function ConfirmCode() {
         toast.success("You Are SignIn");
         dispatch(setAuthUser(res.data.data));
         localStorage.removeItem("signin-email");
-        navigate("/");
+        if (res?.data?.data?.role === "admin") {
+          navigate("/admin");
+          console.log("Admin");
+        } else {
+          navigate("/");
+          console.log("User");
+        }
       })
       .catch((err) => {
         toast.error(err?.response?.data?.message);

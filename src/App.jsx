@@ -12,6 +12,7 @@ import { setAuthUser } from "./store/authSlice";
 import "./App.css";
 import { getCurrentUser } from "./apis";
 import Loader from "./components/Loader";
+import Admin from "./pages/Admin";
 function App() {
   const authUser = useSelector((state) => state.auth.authUser);
   const [isloadding, setIsLoadding] = useState(true);
@@ -38,7 +39,20 @@ function App() {
         </div>
       )}
       <Routes>
-        <Route path="" element={authUser ? <ChatContainer /> : <SignIn />} />
+        <Route
+          path=""
+          element={
+            authUser ? (
+              authUser.role === "admin" ? (
+                <Admin />
+              ) : (
+                <ChatContainer />
+              )
+            ) : (
+              <SignIn />
+            )
+          }
+        />
         <Route
           path="signup"
           element={!authUser ? <SignUp /> : <Navigate to="/" />}

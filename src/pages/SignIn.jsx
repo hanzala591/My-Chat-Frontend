@@ -22,7 +22,6 @@ export default function SignIn() {
     event.preventDefault();
     signInUser(form)
       .then((res) => {
-        console.log("res");
         navigate("/verifycodeforsignin");
         toast.info("Code is Send Your Gmail.");
         localStorage.setItem("signin-email", res?.data?.data);
