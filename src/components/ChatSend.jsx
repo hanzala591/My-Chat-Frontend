@@ -84,7 +84,7 @@ export default function ChatSend() {
         value={message}
       />
       <div
-        className="bg-green-500 rounded-full flex justify-center items-center px-3 cursor-pointer"
+        className="bg-blue-700 rounded-full flex justify-center items-center px-3 cursor-pointer"
         onClick={toggleListening}
       >
         {isListening ? (
@@ -98,7 +98,7 @@ export default function ChatSend() {
         )}
       </div>
       <button
-        className="bg-green-500 text-white px-4 py-2 rounded-full cursor-pointer"
+        className="bg-blue-700 text-white px-4 py-2 rounded-full cursor-pointer"
         onClick={handlesendMessage}
       >
         Send
