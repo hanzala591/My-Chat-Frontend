@@ -5,7 +5,7 @@ import App from "./App.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUp from "./pages/SignUp.jsx";
 import SignIn from "./pages/SignIn.jsx";
-import ConfirmCode from "./pages/VerifyCodeForSignIn";
+import ConfirmCode from "./pages/VerifyCodeForSignUp";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import ForgetPassword from "./pages/ForgetPassword";

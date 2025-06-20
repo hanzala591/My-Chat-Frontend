@@ -9,10 +9,12 @@ export const signUpUser = async (formData) => {
   return await axiosInstance.post("/auth/signup", formData);
 };
 export const signInUser = async (formData) => {
-  return await axiosInstance.post("/auth/signin", formData);
+  return await axiosInstance.post("/auth/signin", formData, {
+    withCredentials: true,
+  });
 };
-export const verfiyCodeForSignIn = async (formData) => {
-  return await axiosInstance.post("/auth/verifyOTPSignIn", formData, {
+export const verfiyCodeForSignUp = async (formData) => {
+  return await axiosInstance.post("/auth/verifyOTPSignUp", formData, {
     withCredentials: true,
   });
 };
@@ -21,6 +23,12 @@ export const forgetPassword = async (email) => {
 };
 export const verfiyCodeForForgetPassword = async (formData) => {
   return await axiosInstance.post("/auth/verifyOTPForgetPassword", formData, {
+    withCredentials: true,
+  });
+};
+
+export const logout = async () => {
+  return await axiosInstance.get("/auth/logout", {
     withCredentials: true,
   });
 };

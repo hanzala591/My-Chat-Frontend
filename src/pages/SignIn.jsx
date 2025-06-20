@@ -1,6 +1,6 @@
 import { signInUser } from "@/apis";
-import { axiosInstance } from "@/apis/axios/axios";
 import Loader from "@/components/Loader";
+import { setAuthUser } from "@/store/authSlice";
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
@@ -17,14 +17,15 @@ export default function SignIn() {
     email: "",
     password: "",
   });
+
   const handleSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
     signInUser(form)
       .then((res) => {
-        navigate("/verifycodeforsignin");
-        toast.info("Code is Send Your Gmail.");
-        localStorage.setItem("signin-email", res?.data?.data);
+        navigate("/");
+        toast.info("You are Signin");
+        dispatch(setAuthUser(res?.data?.data));
         setLoading(false);
       })
       .catch((err) => {

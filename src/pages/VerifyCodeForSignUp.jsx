@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { axiosInstance } from "@/apis/axios/axios";
 import { useNavigate } from "react-router-dom";
-import { verfiyCodeForSignIn } from "@/apis";
+import { verfiyCodeForSignUp } from "@/apis";
 import { setAuthUser } from "@/store/authSlice";
 export default function ConfirmCode() {
   const navigate = useNavigate();
@@ -17,14 +17,14 @@ export default function ConfirmCode() {
   const [otpCode, setOtpCode] = useState();
   const handleverify = async (event) => {
     const formData = {
-      email: localStorage.getItem("signin-email"),
-      code: otpCode,
+      email: localStorage.getItem("signup-email"),
+      otp: otpCode,
     };
-    verfiyCodeForSignIn(formData)
+    verfiyCodeForSignUp(formData)
       .then((res) => {
         toast.success(res?.data?.data?.message);
         dispatch(setAuthUser(res?.data?.data));
-        localStorage.removeItem("signin-email");
+        localStorage.removeItem("signup-email");
         if (res?.data?.data?.role === "admin") {
           navigate("/admin");
           console.log("Admin");

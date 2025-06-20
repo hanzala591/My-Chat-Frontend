@@ -26,10 +26,11 @@ export default function SignUp() {
       email: form.email,
       password: form.password,
     };
+    localStorage.setItem("signup-email", form.email);
     signUpUser(formData)
       .then((res) => {
-        toast.success("You Are Registered Please Signin");
-        navigate("/signin");
+        toast.success(res?.data?.data?.message);
+        navigate("/verifycodeforsignUp");
       })
       .catch((err) => {
         toast.error(err?.response?.data?.message);

@@ -30,7 +30,7 @@ export default function ConfirmCode() {
     }
     const formData = {
       email: localStorage.getItem("signin-email"),
-      code: form.code,
+      otp: form.code,
       password: form.password,
     };
     verfiyCodeForForgetPassword(formData)

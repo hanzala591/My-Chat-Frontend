@@ -3,7 +3,7 @@ export const messageSlice = createSlice({
   name: "message",
   initialState: {
     messages: [],
-    selectedUser: null,
+    selectedUser: JSON.parse(localStorage.getItem("selected-user")) || null,
   },
   reducers: {
     getMessages: (state, action) => {

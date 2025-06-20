@@ -2,23 +2,28 @@ import {
   getCurrentUser,
   signUpUser,
   signInUser,
-  verfiyCodeForSignIn,
+  verfiyCodeForSignUp,
   forgetPassword,
   verfiyCodeForForgetPassword,
+  logout,
 } from "./auth/auth.api.js";
-export {
-  getCurrentUser,
-  signUpUser,
-  signInUser,
-  verfiyCodeForSignIn,
-  forgetPassword,
-  verfiyCodeForForgetPassword,
-};
+
 import { getAllUsers } from "./user/user.api.js";
-export { getAllUsers };
 import {
   getAllMessages,
   sendMessage,
   getAllAdminMessages,
 } from "./message/message.api.js";
-export { getAllMessages, sendMessage, getAllAdminMessages };
+export {
+  getCurrentUser,
+  signUpUser,
+  signInUser,
+  verfiyCodeForSignUp,
+  forgetPassword,
+  verfiyCodeForForgetPassword,
+  logout,
+  getAllUsers,
+  getAllMessages,
+  sendMessage,
+  getAllAdminMessages,
+};
