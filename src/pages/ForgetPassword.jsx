@@ -1,5 +1,5 @@
 import { forgetPassword } from "@/apis";
-import { axiosInstance } from "@/apis/axios/axios";
+import { axiosInstance } from "@/apis/axios";
 import Loader from "@/components/Loader";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";

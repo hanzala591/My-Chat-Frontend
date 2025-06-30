@@ -13,7 +13,8 @@ import "./App.css";
 import { getCurrentUser } from "./apis";
 import Loader from "./components/Loader";
 import Admin from "./pages/Admin";
-
+import { globalPDFWorker } from "./lib/pdf-worker";
+globalPDFWorker();
 function App() {
   const authUser = useSelector((state) => state.auth.authUser);
   const [isloadding, setIsLoadding] = useState(true);

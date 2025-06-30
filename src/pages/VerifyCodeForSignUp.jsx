@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/input-otp";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { axiosInstance } from "@/apis/axios/axios";
+import { axiosInstance } from "@/apis/axios";
 import { useNavigate } from "react-router-dom";
 import { verfiyCodeForSignUp } from "@/apis";
 import { setAuthUser } from "@/store/authSlice";

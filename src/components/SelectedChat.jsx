@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllMessages } from "@/apis";
 import { getMessages } from "@/store/messageSlice";
 import { LuMessageCircleOff } from "react-icons/lu";
+import PdfView from "./PdfView";
+import ImageView from "./ImageView";
 
 export default function SelectedChat() {
   const authUser = useSelector((state) => state.auth.authUser);
@@ -15,16 +17,17 @@ export default function SelectedChat() {
     if (selectedUser) {
       getAllMessages(selectedUser._id)
         .then((res) => {
+          console.log("res");
           dispatch(getMessages(res?.data?.data));
         })
         .catch((err) => {
-          console.log(err);
-          console.log(err);
+          console.log("err");
         });
     }
 
     return () => {};
   }, [selectedUser]);
+  // const pdfUrl = "helloworld.pdf";
 
   return (
     <div className="flex flex-col gap-4 h-full">
@@ -35,14 +38,16 @@ export default function SelectedChat() {
       ) : (
         messages.map((msg, index) =>
           msg?.senderId === authUser?._id ? (
-            <SenderMessage key={index} message={msg.message} />
+            <SenderMessage key={index} message={msg} />
           ) : (
             selectedUser?._id === msg?.senderId && (
-              <RecieverMessage key={index} message={msg.message} />
+              <RecieverMessage key={index} message={msg} />
             )
           )
         )
       )}
+      {/* <PdfView /> */}
+      {/* <ImageView /> */}
     </div>
   );
 }

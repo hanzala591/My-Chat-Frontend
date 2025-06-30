@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/input-otp";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { axiosInstance } from "@/apis/axios/axios";
+import { axiosInstance } from "@/apis/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { setAuthUser } from "@/store/authSlice";

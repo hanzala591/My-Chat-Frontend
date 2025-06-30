@@ -1,4 +1,4 @@
-import { axiosInstance } from "../axios/axios";
+import { axiosInstance } from "./axios";
 
 export const getCurrentUser = async () => {
   return await axiosInstance.get("/auth/getCurrentUser", {
