@@ -19,10 +19,10 @@ const ChatContainer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket.emit("register", user._id);
-    socket.on("registered", (res) => {
+    socket.emit("register", user._id, (res) => {
       console.log(res);
     });
+
     getAllUsers()
       .then((res) => {
         dispatch(setUser(res?.data?.data));
@@ -30,6 +30,7 @@ const ChatContainer = () => {
       .catch((err) => {
         toast.error(err?.message);
       });
+
     socket.on("newmessage", (message) => {
       dispatch(setMessages(message));
     });
@@ -37,7 +38,7 @@ const ChatContainer = () => {
   }, []);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <ChatSidebar />
 

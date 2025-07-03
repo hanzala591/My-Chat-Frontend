@@ -6,6 +6,9 @@ export const sendMessage = async (message, id) => {
     message,
     {
       withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     }
   );
   return response;
@@ -18,7 +21,6 @@ export const getAllMessages = async (id) => {
       withCredentials: true,
     }
   );
-  console.log(response);
   return response;
 };
 

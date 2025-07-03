@@ -3,7 +3,7 @@ import { setSelectedUser } from "@/store/messageSlice";
 import React from "react";
 import { useDispatch } from "react-redux";
 
-export default function SelectUser({ value, index }) {
+export default function SelectUser({ value, index, type }) {
   const dispatch = useDispatch();
   return (
     <div
@@ -19,11 +19,16 @@ export default function SelectUser({ value, index }) {
           style={{ backgroundColor: color.backgroundColor[index] }}
         >
           <div className="w-full h-full font-bold flex justify-center items-center">
-            {value.username[0].toUpperCase()}
+            {type === "user"
+              ? value.username[0].toUpperCase()
+              : value.name[0].toUpperCase()}
           </div>
         </div>
         <div className="w-[80%] flex flex-col justify-between">
-          <div className="font-bold uppercase"> {value.username}</div>
+          <div className="font-bold uppercase">
+            {" "}
+            {type === "user" ? value.username : value.name}
+          </div>
           <div>{value.about.split(" ").slice(0, 3).join(" ")} ...</div>
         </div>
       </div>

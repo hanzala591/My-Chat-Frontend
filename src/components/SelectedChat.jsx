@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SenderMessage from "./SenderMessage";
 import RecieverMessage from "./RecieverMessage";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,6 @@ export default function SelectedChat() {
     if (selectedUser) {
       getAllMessages(selectedUser._id)
         .then((res) => {
-          console.log("res");
           dispatch(getMessages(res?.data?.data));
         })
         .catch((err) => {
@@ -27,6 +26,11 @@ export default function SelectedChat() {
 
     return () => {};
   }, [selectedUser]);
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   // const pdfUrl = "helloworld.pdf";
 
   return (
@@ -48,6 +52,7 @@ export default function SelectedChat() {
       )}
       {/* <PdfView /> */}
       {/* <ImageView /> */}
+      <div ref={messagesEndRef} />
     </div>
   );
 }

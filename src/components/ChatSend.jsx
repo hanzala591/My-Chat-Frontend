@@ -105,7 +105,6 @@ export default function ChatSend() {
           ref={shareFileRef}
           className="hidden"
           onChange={() => {
-            console.log(shareFileRef);
             if (shareFileRef?.current?.value) {
               toast.success("File Is Selected.");
             }
@@ -113,6 +112,7 @@ export default function ChatSend() {
               toast.success("File Is Un Selected.");
             }
           }}
+          accept=".pdf,image/*"
         />
       </div>
       <div

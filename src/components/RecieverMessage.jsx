@@ -1,6 +1,5 @@
 // components/ReceiverBubble.jsx
 import React from "react";
-import PdfView from "./PdfView";
 import MediaView from "./MediaView";
 
 const RecieverMessage = ({ message }) => {

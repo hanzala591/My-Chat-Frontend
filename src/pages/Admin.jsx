@@ -15,7 +15,8 @@ export default function Admin() {
     socket.on("registered", (res) => {
       console.log(res);
     });
-    socket.on("newmessage", (message) => {
+    socket.on("adminMessage", (message) => {
+      console.log(message);
       dispatch(setMessages(message));
     });
     getAllAdminMessages()
@@ -25,9 +26,9 @@ export default function Admin() {
       .catch((err) => {
         toast.error(err);
       });
-    socket.on("newmessage", (message) => {
-      dispatch(setMessages(message));
-    });
+    // socket.on("newmessage", (message) => {
+    //   dispatch(setMessages(message));
+    // });
   }, []);
 
   return (
@@ -37,14 +38,14 @@ export default function Admin() {
           Admin : {authUser.username}
         </div>
         <div>
-          {messages.map((value, index) => (
+          {messages.map((receivedMessage, index) => (
             <div className="felx flex-col gap-3" key={index}>
               <div className="flex gap-3 items-center">
                 <div className="f text-xl font-bold">
-                  {value?.senderId?.username}
+                  {receivedMessage?.senderId?.username}
                 </div>{" "}
                 :
-                <RecieverMessage message={value?.message} />
+                <RecieverMessage message={receivedMessage} />
               </div>
               <hr className="m-4" />
             </div>

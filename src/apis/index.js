@@ -8,6 +8,7 @@ import {
   getCurrentUser,
 } from "./auth.api.js";
 import { getAllUsers } from "./user.api.js";
+import { getAllGroups, createGroup } from "./group.api.js";
 import {
   getAllMessages,
   sendMessage,
@@ -25,4 +26,6 @@ export {
   getAllMessages,
   sendMessage,
   getAllAdminMessages,
+  getAllGroups,
+  createGroup,
 };

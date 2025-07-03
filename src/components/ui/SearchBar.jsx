@@ -11,7 +11,7 @@ export default function SearchBar({ onSearch }) {
 
   return (
     <div
-      className={`flex items-center w-full px-3 py-2 my-2 bg-[#D6D8E6] rounded ${
+      className={`flex items-center w-full px-3 py-2 mt-1 bg-[#D6D8E6] rounded ${
         isFocused ? "bg-[#D6D8E6] ring-2 ring-blue-400" : ""
       } transition-all`}
     >
