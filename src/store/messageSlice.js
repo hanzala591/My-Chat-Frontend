@@ -15,8 +15,11 @@ export const messageSlice = createSlice({
     setSelectedUser: (state, action) => {
       state.selectedUser = action.payload;
     },
+    addMeesage: (state, action) => {
+      state.messages.push(action.payload);
+    },
   },
 });
-export const { setMessages, getMessages, setSelectedUser } =
+export const { setMessages, getMessages, setSelectedUser, addMeesage } =
   messageSlice.actions;
 export default messageSlice.reducer;

@@ -7,6 +7,7 @@ import { getMessages } from "@/store/messageSlice";
 import { LuMessageCircleOff } from "react-icons/lu";
 import PdfView from "./PdfView";
 import ImageView from "./ImageView";
+import { socket } from "@/config/socket";
 
 export default function SelectedChat() {
   const authUser = useSelector((state) => state.auth.authUser);
@@ -15,13 +16,16 @@ export default function SelectedChat() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (selectedUser) {
-      getAllMessages(selectedUser._id)
+      getAllMessages(selectedUser._id, selectedUser?.type)
         .then((res) => {
           dispatch(getMessages(res?.data?.data));
         })
         .catch((err) => {
           console.log("err");
         });
+    }
+    if (selectedUser.type === "group") {
+      socket.emit("join-group", selectedUser?._id, authUser?._id);
     }
 
     return () => {};
@@ -43,15 +47,16 @@ export default function SelectedChat() {
         messages.map((msg, index) =>
           msg?.senderId === authUser?._id ? (
             <SenderMessage key={index} message={msg} />
+          ) : selectedUser?._id === msg?.senderId ? (
+            <RecieverMessage key={index} message={msg} />
           ) : (
-            selectedUser?._id === msg?.senderId && (
+            selectedUser?._id === msg?.receiverGroup && (
               <RecieverMessage key={index} message={msg} />
             )
           )
         )
       )}
-      {/* <PdfView /> */}
-      {/* <ImageView /> */}
+
       <div ref={messagesEndRef} />
     </div>
   );

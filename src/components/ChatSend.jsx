@@ -21,11 +21,12 @@ export default function ChatSend() {
       if (shareFileRef?.current?.value) {
         media = shareFileRef?.current?.files[0];
       }
+      console.log(selectedUser);
       const formData = new FormData();
       formData.append("text", message);
       formData.append("media", media);
 
-      sendMessage(formData, selectedUser._id)
+      sendMessage(formData, selectedUser._id, selectedUser?.type)
         .then((res) => {
           console.log("res");
           dispatch(setMessages(res?.data?.data));

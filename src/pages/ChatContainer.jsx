@@ -9,7 +9,7 @@ import { socket } from "@/config/socket";
 import { getAllUsers, logout } from "@/apis";
 import { setUser } from "@/store/userSlice";
 import { toast } from "react-toastify";
-import { setMessages, setSelectedUser } from "@/store/messageSlice";
+import { addMeesage, setMessages, setSelectedUser } from "@/store/messageSlice";
 import SelectedChat from "@/components/SelectedChat";
 import ChatSidebar from "@/components/ChatSidebar";
 import { setAuthUser } from "@/store/authSlice";
@@ -22,7 +22,6 @@ const ChatContainer = () => {
     socket.emit("register", user._id, (res) => {
       console.log(res);
     });
-
     getAllUsers()
       .then((res) => {
         dispatch(setUser(res?.data?.data));
@@ -32,7 +31,7 @@ const ChatContainer = () => {
       });
 
     socket.on("newmessage", (message) => {
-      dispatch(setMessages(message));
+      dispatch(addMeesage(message));
     });
     return () => {};
   }, []);
@@ -45,7 +44,11 @@ const ChatContainer = () => {
       {/* Chat window */}
       <div className="flex-1 flex flex-col">
         <div className="p-4 bg-white border-b font-semibold uppercase flex justify-between items-center">
-          <div>{selectedUser ? selectedUser.username : "Friend"}</div>
+          <div>
+            {selectedUser
+              ? selectedUser?.username || selectedUser?.name
+              : "Friend"}
+          </div>
           <div
             className="cursor-pointer text-3xl"
             onClick={() => {

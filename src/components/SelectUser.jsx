@@ -9,8 +9,15 @@ export default function SelectUser({ value, index, type }) {
     <div
       className="p-2 bg-white rounded shadow cursor-pointer"
       onClick={() => {
-        dispatch(setSelectedUser(value));
-        localStorage.setItem("selected-user", JSON.stringify(value));
+        let obj = { ...value };
+        if (type === "user") {
+          obj.type = "user";
+        } else {
+          obj.type = "group";
+        }
+
+        dispatch(setSelectedUser(obj));
+        localStorage.setItem("selected-user", JSON.stringify(obj));
       }}
     >
       <div className="flex flex-row gap-3">
